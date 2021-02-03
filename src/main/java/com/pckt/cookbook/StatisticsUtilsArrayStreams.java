@@ -2,111 +2,116 @@ package com.pckt.cookbook;
 
 
 import java.util.Arrays;
-import java.util.stream.DoubleStream;
+import static java.lang.Math.sqrt;
 
 /**
- * This class is responsible for providing a set of statistical
- * values for an array of double values utilizing Java Streams.
- *
+ * This class is responsible for providing a set of statistical values for an array of double values utilizing Java Streams.
  */
 public class StatisticsUtilsArrayStreams {
-    double max;
-    double min;
-    double mean;
-    double median;
-    double standard_deviation;
 
     /**
      * Gets an array of double values as input and returns the maximum of these values
-     * @param given_array  The input array of double values
-     * @return Max value of input array
-     * @throws IllegalArgumentException If an invalid input array is provided.
      *
+     * @param givenArray  The input array of double values
+     *
+     * @return Max value of input array
+     *
+     * @throws IllegalArgumentException If an invalid input array is provided.
      */
-    public double getMax(double[] given_array) {
-        if (given_array == null || given_array.length == 0){
+    public double getMax(double[] givenArray) {
+        if (givenArray == null || givenArray.length == 0)
+
             throw new IllegalArgumentException("Input array for max calculation cannot be null or empty");
-        }else {
-            DoubleStream stream = Arrays.stream(given_array);
-            this.max = stream.max().getAsDouble();
-            return max;
-        }
+
+
+        return Arrays.stream(givenArray).max().orElse(-1);
+
     }
     /**
      * Gets an array of double values as input and returns the minimum of these values
-     * @param given_array  The input array of double values
-     * @return Min value of input array
-     * @throws IllegalArgumentException If an invalid input array is provided.
      *
+     * @param givenArray  The input array of double values
+     *
+     * @return Min value of input array
+     *
+     * @throws IllegalArgumentException If an invalid input array is provided.
      */
-    public double getMin(double[] given_array) {
-        if (given_array == null || given_array.length == 0){
+    public double getMin(double[] givenArray) {
+        if (givenArray == null || givenArray.length == 0)
+
             throw new IllegalArgumentException("Input array min calculation cannot be null or empty");
-        }else {
-            DoubleStream stream = Arrays.stream(given_array);
-            this.min = stream.min().getAsDouble();
-            return min;
-        }
+
+
+        return Arrays.stream(givenArray).min().orElse(-1);
+
     }
     /**
      * Gets an array of double values as input and returns the mean of these values
-     * @param given_array  The input array of double values
-     * @return Mean value of input array
-     * @throws IllegalArgumentException If an invalid input array is provided.
      *
+     * @param givenArray  The input array of double values
+     *
+     * @return Mean value of input array
+     *
+     * @throws IllegalArgumentException If an invalid input array is provided.
      */
-    public double getMean(double[] given_array) {
-        if (given_array == null || given_array.length == 0) {
+    public double getMean(double[] givenArray) {
+        if (givenArray == null || givenArray.length == 0)
+
             throw new IllegalArgumentException("Input array mean calculation cannot be null or empty");
-        }
-        if(Arrays.toString(given_array).contains("Infinity")){
+
+        if(Arrays.toString(givenArray).contains("Infinity"))
+
             throw new IllegalArgumentException("Input array median calculation cannot contain infinity");
-        }else {
-            DoubleStream stream = Arrays.stream(given_array);
-            this.mean = stream.average().getAsDouble();
-            return mean;
-        }
+
+
+        return Arrays.stream(givenArray).average().orElse(-1);
+
+
     }
     /**
      * Gets an array of double values as input and returns the median of these values
-     * @param given_array  The input array of double values
-     * @return Median value of input array
-     * @throws IllegalArgumentException If an invalid input array is provided.
      *
+     * @param givenArray  The input array of double values
+     *
+     * @return Median value of input array
+     *
+     * @throws IllegalArgumentException If an invalid input array is provided.
      */
-    public double getMedian(double[] given_array) {
-        if (given_array == null || given_array.length == 0){
+    public double getMedian(double[] givenArray) {
+        if (givenArray == null || givenArray.length == 0)
+
             throw new IllegalArgumentException("Input array median calculation cannot be null or empty");
-        }else {
-            DoubleStream stream = Arrays.stream(given_array);
-            this.median = stream.sorted().skip(Math.max(0, ((given_array.length + 1) / 2) - 1))
-                    .limit(1 + (1 + given_array.length) % 2).average().getAsDouble();
-            return median;
-        }
+
+
+        return Arrays.stream(givenArray).sorted().skip(Math.max(0, ((givenArray.length + 1) / 2) - 1))
+                    .limit(1 + (1 + givenArray.length) % 2).average().orElse(-1);
+
     }
     /**
      * Gets an array of double values as input and returns the Standard deviation of these values
-     * @param given_array  The input array of double values
-     * @return Standard deviation value of input array
-     * @throws IllegalArgumentException If an invalid input array is provided.
      *
+     * @param givenArray  The input array of double values
+     *
+     * @return Standard deviation value of input array
+     *
+     * @throws IllegalArgumentException If an invalid input array is provided.
      */
-    public double getStandard_deviation(double[] given_array) {
-        if (given_array == null || given_array.length == 0){
+    public double getStandardDeviation(double[] givenArray) {
+        if (givenArray == null || givenArray.length == 0)
+
             throw new IllegalArgumentException("Input array standard_deviation calculation cannot be null or empty");
-        }
-        if(Arrays.toString(given_array).contains("Infinity")){
+
+        if(Arrays.toString(givenArray).contains("Infinity"))
+
             throw new IllegalArgumentException("Input array standard_deviation calculation cannot be null or empty");
-        }
-        else {
-            DoubleStream stream = Arrays.stream(given_array);
-            double variance = stream
-                    .map(i -> i - this.getMean(given_array))
-                    .map(i -> i*i)
-                    .sum();
-            variance = variance/(given_array.length-1);
-            this.standard_deviation = Math.sqrt(variance);
-            return standard_deviation;
-        }
+
+
+        double variance = Arrays.stream(givenArray)
+                .map(i -> i - this.getMean(givenArray))
+                .map(i -> i*i)
+                .sum();
+        variance = variance/(givenArray.length-1);
+        return sqrt(variance);
+
     }
 }

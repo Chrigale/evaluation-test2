@@ -48,11 +48,22 @@ public class App2 {
 */
     List<Double> list = Arrays.asList(1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0);
     List<Integer> list3 = Arrays.asList(1,2,3,4,5);
+    StatisticUtilsArrayListUsingGenerics<Integer> gab = new StatisticUtilsArrayListUsingGenerics<>();
+
+        System.out.println(gab.getMax(list3));
+
+
     double[] values = {-5, -4, 10, 20, 50};
     List<Double> list2 = new ArrayList<>();
     list2.add(-0.0);
     list2.add(-0.0);
     StatisticUtilsArray bob = new StatisticUtilsArray();
+
+    AscendingMinima marley = new AscendingMinima(values,3);
+
+        System.out.println(marley.getFirstAscendingMinima());
+
+
 
     }
 

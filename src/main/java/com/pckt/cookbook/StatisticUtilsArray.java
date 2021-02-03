@@ -7,103 +7,113 @@ import java.util.Arrays;
 
 
 /**
- * This class is responsible for providing a set of statistical
- * values for an array of double values.
+ * This class is responsible for providing a set of statistical values for an array of double values.
  *
  */
 class StatisticUtilsArray {
-    double max;
-    double min;
-    double mean;
-    double median;
-    double standard_deviation;
 
     /**
      * Gets an array of double values as input and returns the maximum of these values
-     * @param given_array  The input array of double values
-     * @return Max value of input array
-     * @throws IllegalArgumentException If an invalid input array is provided.
      *
+     * @param givenArray  The input array of double values
+     *
+     * @return Max value of input array
+     *
+     * @throws IllegalArgumentException If an invalid input array is provided.
      */
-    public double getMax(double[] given_array) {
-        if (given_array == null || given_array.length == 0){
+    public double getMax(double[] givenArray) {
+        if (givenArray == null || givenArray.length == 0)
+
             throw new IllegalArgumentException("Input array cannot be null or empty");
-        }else {
-            this.max = StatUtils.max(given_array);
-            return max;
-        }
+
+
+        return StatUtils.max(givenArray);
+
     }
 
     /**
      * Gets an array of double values as input and returns the minimum of these values
-     * @param given_array  The input array of double values
-     * @return Min value of input array
-     * @throws IllegalArgumentException If an invalid input array is provided.
      *
+     * @param givenArray  The input array of double values
+     *
+     * @return Min value of input array
+     *
+     * @throws IllegalArgumentException If an invalid input array is provided.
      */
-    public double getMin(double[] given_array) {
-        if (given_array == null || given_array.length == 0){
+    public double getMin(double[] givenArray) {
+        if (givenArray == null || givenArray.length == 0)
+
             throw new IllegalArgumentException("Input array cannot be null or empty");
-        }else {
-            this.min = StatUtils.min(given_array);
-            return min;
-        }
+
+
+        return  StatUtils.min(givenArray);
+
     }
 
     /**
      * Gets an array of double values as input and returns the mean of these values
-     * @param given_array  The input array of double values
-     * @return Mean value of input array
-     * @throws IllegalArgumentException If an invalid input array is provided.
      *
+     * @param givenArray  The input array of double values
+     *
+     * @return Mean value of input array
+     *
+     * @throws IllegalArgumentException If an invalid input array is provided.
      */
-    public double getMean(double[] given_array) {
-        if (given_array == null || given_array.length == 0) {
+    public double getMean(double[] givenArray) {
+        if (givenArray == null || givenArray.length == 0)
+
             throw new IllegalArgumentException("Input array mean calculation cannot be null or empty");
-        }
-        if(Arrays.toString(given_array).contains("Infinity")){
-            throw new IllegalArgumentException("Input array median calculation cannot contain infinity");
-        }else {
-            this.mean = StatUtils.mean(given_array);
-            return mean;
-        }
+
+        if(Arrays.toString(givenArray).contains("Infinity"))
+
+            throw new IllegalArgumentException("Input array mean calculation cannot contain infinity");
+
+
+        return StatUtils.mean(givenArray);
+
     }
 
     /**
      * Gets an array of double values as input and returns the median of these values
-     * @param given_array  The input array of double values
-     * @return Median value of input array
-     * @throws IllegalArgumentException If an invalid input array is provided.
      *
+     * @param givenArray  The input array of double values
+     *
+     * @return Median value of input array
+     *
+     * @throws IllegalArgumentException If an invalid input array is provided.
      */
-    public double getMedian(double[] given_array) {
-        if (given_array == null || given_array.length == 0){
+    public double getMedian(double[] givenArray) {
+        if (givenArray == null || givenArray.length == 0)
+
             throw new IllegalArgumentException("Input array median calculation cannot be null or empty");
-        }else {
-            Median media = new Median();
-            this.median = media.evaluate(given_array);
-            return median;
-        }
+
+
+        Median median = new Median();
+        return median.evaluate(givenArray);
+
     }
 
     /**
      * Gets an array of double values as input and returns the Standard deviation of these values
-     * @param given_array  The input array of double values
-     * @return Standard deviation value of input array
-     * @throws IllegalArgumentException If an invalid input array is provided.
      *
+     * @param givenArray  The input array of double values
+     *
+     * @return Standard deviation value of input array
+     *
+     * @throws IllegalArgumentException If an invalid input array is provided.
      */
-    public double getStandard_deviation(double[] given_array) {
-        if (given_array == null || given_array.length == 0){
+    public double getStandardDeviation(double[] givenArray) {
+        if (givenArray == null || givenArray.length == 0)
+
             throw new IllegalArgumentException("Input array standard_deviation calculation cannot be null or empty");
-        }
-        if(Arrays.toString(given_array).contains("Infinity")){
+
+        if(Arrays.toString(givenArray).contains("Infinity"))
+
             throw new IllegalArgumentException("Input array standard_deviation calculation cannot be null or empty");
-        }
-        else {
-            StandardDeviation sdv = new StandardDeviation();
-            this.standard_deviation = sdv.evaluate(given_array);
-            return standard_deviation;
-        }
+
+
+        StandardDeviation sdv = new StandardDeviation();
+        return sdv.evaluate(givenArray);
+
     }
 }
