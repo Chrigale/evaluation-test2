@@ -1,65 +1,289 @@
 package com.pckt.cookbook;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+
+import org.junit.jupiter.api.Test;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.*;
+
 
 import java.util.Arrays;
-import java.util.Collection;
+import java.util.List;
+import java.util.stream.Stream;
 
-import static org.junit.Assert.*;
-import static org.junit.Assume.assumeTrue;
+import static java.util.Collections.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-@RunWith(Parameterized.class)
+
 public class AscendingMinimaTest {
-    enum Type {ASC_MIN,EXCEPTION}
-    @Parameterized.Parameters
-    public static Collection<Object[]> data() {
-        return Arrays.asList(new Object[][]{
-                {AscendingMinimaTest.Type.ASC_MIN,new double[] {5.0, 1.0, 3.0, 2.0, 6.0, 8.0, 4.0, 6.0}, 3, new Double[] {1.0, 1.0, 2.0, 2.0, 4.0, 4.0}},
-                {AscendingMinimaTest.Type.ASC_MIN,new double[] {8,9,5,3,6,5,1,1,0}, 4, new Double[] {3.0, 3.0, 3.0, 1.0, 1.0, 0.0}},
-                {AscendingMinimaTest.Type.ASC_MIN,new double[] {7,4,8,6,3,4,2,1,2}, 5, new Double[] {3.0, 3.0, 2.0, 1.0, 1.0}},
-                {AscendingMinimaTest.Type.ASC_MIN,new double[] {1,2,3,4,5,6,7,8,9}, 1, new Double[] {1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0}},
-                {AscendingMinimaTest.Type.EXCEPTION,new double[] {5.0, 1.0, 3.0}, -3, new Double[] {1.0}},
-                {AscendingMinimaTest.Type.EXCEPTION,new double[] {5.0, 1.0, 3.0}, 0, new Double[] {1.0}},
-                {AscendingMinimaTest.Type.EXCEPTION,new double[] {5.0, 1.0, 3.0}, 5, new Double[] {1.0}},
-                {AscendingMinimaTest.Type.EXCEPTION,new double[] {}, -3, new Double[] {1.0}},
-                {AscendingMinimaTest.Type.EXCEPTION,null, -3, new Double[] {1.0}}
 
-        });
-    }
+    private AscendingMinima calculator;
 
-    private final AscendingMinima calculator;
-    private  final double[] array;
-    private  final Double[] actual_array;
-    private  final int window_size;
-    private  final AscendingMinimaTest.Type type;
+    @BeforeEach
+    public void setUpBeforeClass(){ calculator = new AscendingMinima(); }
 
-    public AscendingMinimaTest(AscendingMinimaTest.Type type,double[] array,int window_size,
-                               Double[] actual_array){
-        this.type = type;
-        this.calculator = new AscendingMinima();
-        this.array = array;
-        this.actual_array = actual_array;
-        this.window_size = window_size;
+    @Test
+    public void getGivenArrayInitialState() {
+
+        assertNull(calculator.getGivenArray());
+
     }
 
     @Test
-    public void testAscendingMinima() {
-        assumeTrue(Type.ASC_MIN == type);
-        Assert.assertArrayEquals(calculator.getRequested_exit(array,window_size), actual_array );
+    public void getWindowSizeInitialState() {
+
+        assertEquals(0, calculator.getWindowSize());
+
+    }
+
+    @ParameterizedTest
+    @NullAndEmptySource
+    void setArrayNullOrEmptyInput(double[] input) {
+
+        getGivenArrayInitialState();
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> calculator.setArray(input));
+
+        assertEquals("Input array cannot be null or empty or smaller than window size.", exception.getMessage());
+
     }
 
     @Test
-    public void testMaxException() {
-        assumeTrue(type == Type.EXCEPTION);
-        try {
-            calculator.getRequested_exit(array,window_size);
-            fail("didn't throw an exception in getRequested_exit method in AscendingMinimaTest class!");
-        } catch (IllegalArgumentException ex) {
-            System.out.println("Exception  in getRequested_exit method in AscendingMinimaTest class");
-        }
+    public void setArrayWithLengthSmallerThanWindowSize() {
+
+        getGivenArrayInitialState();
+        getWindowSizeInitialState();
+
+        calculator.setWindowSize(6);
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> calculator.setArray(new double[] {-5, -4, 10, 20, 50}));
+
+        assertEquals("Input array cannot be null or empty or smaller than window size.", exception.getMessage());
+
+
+    }
+
+
+    @ParameterizedTest
+    @ValueSource(ints = {0,-6})
+    public void setWindowSizeNegativeAndZeroInput(int value) {
+
+        getWindowSizeInitialState();
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> calculator.setWindowSize(value));
+
+        assertEquals("Window_size needs to be greater than zero.", exception.getMessage());
+
+
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {5,6})
+    public void setWindowSizePositiveInput(int value) {
+
+        getWindowSizeInitialState();
+
+        calculator.setWindowSize(value);
+
+        assertEquals(value,calculator.getWindowSize());
+
+
+    }
+
+    @ParameterizedTest
+    @MethodSource
+    public void setArrayInput(double[] value) {
+
+        calculator.setArray(value);
+
+        assertArrayEquals(value,calculator.getGivenArray());
+
+
+    }
+
+    static Stream<Arguments> setArrayInput() {
+        return Stream.of(
+                Arguments.of(new double[] {-5, -4, 10, 20, 50}),
+                Arguments.of(new double[] {-5, -4, 10, 20, 50})
+        );
+    }
+
+    @Test
+    public void setWindowSizeGreaterThanArrayLength() {
+
+        getWindowSizeInitialState();
+        getGivenArrayInitialState();
+
+        calculator.setArray(new double[] {-5, -4, 10, 20, 50});
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> calculator.setWindowSize(10));
+
+        assertEquals("Window_size needs to be greater than array length.", exception.getMessage());
+
+
+    }
+
+    @Test
+    public void checkIfNullConstructorGivesNullObject() {
+
+        assertNotNull(calculator);
+
+
+    }
+
+    @Test
+    public void Constructor() {
+
+        getGivenArrayInitialState();
+        getWindowSizeInitialState();
+
+        double[] array      = {-5, -4, 10, 20, 50};
+        int      windowSize = 3;
+
+        calculator = new AscendingMinima(array, windowSize);
+
+        assertNotNull(calculator);
+        assertEquals(windowSize, calculator.getWindowSize());
+        assertArrayEquals(array,calculator.getGivenArray());
+
+
+    }
+
+    @Test
+    public void getFirstWindowZeroWindowSizeInput() {
+
+        getWindowSizeInitialState();
+
+        calculator.setArray(new double[] {-5, -4, 10, 20, 50});
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> calculator.getFirstWindow());
+
+        assertEquals("You forgot to set windowSize or givenArray arguments.", exception.getMessage());
+
+    }
+
+    @Test
+    public void getFirstWindowNullArrayInput() {
+
+        getGivenArrayInitialState();
+
+        calculator.setWindowSize(5);
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> calculator.getFirstWindow());
+
+        assertEquals("You forgot to set windowSize or givenArray arguments.", exception.getMessage());
+
+    }
+
+    @ParameterizedTest
+    @MethodSource
+    public void getFirstWindowTrueTest(double[] inputArray, int windowSize, List<Double> outputArray){
+
+        getGivenArrayInitialState();
+        getWindowSizeInitialState();
+
+        calculator.setWindowSize(windowSize);
+        calculator.setArray(inputArray);
+        assertEquals(outputArray,calculator.getFirstWindow());
+
+    }
+
+
+    static Stream<Arguments> getFirstWindowTrueTest() {
+
+        return Stream.of(
+                Arguments.of( new double[] {-5, -4, 10, 20, 50}, 4 ,Arrays.asList(-5d, -4d, 10d, 20d)),
+                Arguments.of( new double[] {-5, -4, 10, 20, 50}, 2 , Arrays.asList(-5d, -4d))
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource
+    public void getFirstWindowFalseTest(double[] inputArray, int windowSize, List<Double> outputArray){
+
+        getGivenArrayInitialState();
+        getWindowSizeInitialState();
+
+        calculator.setWindowSize(windowSize);
+        calculator.setArray(inputArray);
+        assertNotEquals(outputArray,calculator.getFirstWindow());
+
+    }
+
+
+    static Stream<Arguments> getFirstWindowFalseTest() {
+
+        return Stream.of(
+                Arguments.of( new double[] {-5, -4, 10, 20, 50}, 4 ,Arrays.asList(-5d, -4d, 10d)),
+                Arguments.of( new double[] {-5, -4, 10, 20, 50}, 2 , Arrays.asList(-5d, -4d,20d,30d))
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource
+    public void getFirstAscendingMinimaTest(double[] inputArray, int windowSize, List<Double> outputArray){
+
+        getGivenArrayInitialState();
+        getWindowSizeInitialState();
+
+        calculator.setWindowSize(windowSize);
+        calculator.setArray(inputArray);
+        assertEquals(outputArray,calculator.getFirstAscendingMinima());
+
+    }
+
+
+    static Stream<Arguments> getFirstAscendingMinimaTest() {
+
+        return Stream.of(
+                Arguments.of( new double[] {9d,5d,10d,4d,3d}, 3 ,Arrays.asList(5d, 10d)),
+                Arguments.of( new double[] {5d,-8d,-8d, 10d,1d}, 2 , singletonList(-8d))
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource
+    public void getFirstAscendingMinimaFalseTest(double[] inputArray, int windowSize, List<Double> outputArray){
+
+        getGivenArrayInitialState();
+        getWindowSizeInitialState();
+
+        calculator.setWindowSize(windowSize);
+        calculator.setArray(inputArray);
+        assertNotEquals(outputArray,calculator.getFirstAscendingMinima());
+
+    }
+
+
+    static Stream<Arguments> getFirstAscendingMinimaFalseTest() {
+
+        return Stream.of(
+                Arguments.of( new double[] {9d,5d,10d,4d,3d}, 3 , singletonList(5d)),
+                Arguments.of( new double[] {5d,-8d,-8d, 10d,1d}, 2 , Arrays.asList(-8d,-8d))
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource
+    public void getAscendingMinimaTest(double[] inputArray, int windowSize, double[] outputArray){
+
+        getGivenArrayInitialState();
+        getWindowSizeInitialState();
+
+        calculator.setWindowSize(windowSize);
+        calculator.setArray(inputArray);
+        assertArrayEquals(outputArray,calculator.getAscendingMinima());
+
+    }
+
+
+    static Stream<Arguments> getAscendingMinimaTest() {
+
+        return Stream.of(
+                Arguments.of( new double[] {9d,5d,10d,4d,3d}, 3 ,new double[] {5d,4d,3d}),
+                Arguments.of( new double[] {5d,-8d,-8d, 10d,1d}, 2 , new double[] {-8d,-8d,-8d,1d}),
+                Arguments.of( new double[] {5d,-8d,15d, 0d,-1d,9d}, 4 , new double[] {-8d,-8d,-1d})
+        );
     }
 
 }

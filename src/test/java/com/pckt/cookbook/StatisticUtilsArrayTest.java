@@ -1,133 +1,128 @@
 package com.pckt.cookbook;
 
-import org.junit.Assume;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.fail;
-import static org.junit.Assume.assumeTrue;
+import java.util.stream.Stream;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import static java.lang.Double.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.Arrays;
-import java.util.Collection;
-
-
-@RunWith(Parameterized.class)
 public class StatisticUtilsArrayTest {
-    enum Type {MAX, MIN,EXCEPTION,MEAN,MEDIAN,STAND_DEV,INFEXCEPTION}
-    @Parameters
-    public static Collection<Object[]> data() {
-        return Arrays.asList(new Object[][] {
-                {Type.MAX,new double[] {1,4,1,6,3,5}, 6},
-                {Type.MAX,new double[] {-1,-4,-1}, -1},
-                {Type.MIN,new double[] {5,8,5}, 5},
-                {Type.MIN,new double[] {5,8,-5}, -5},
-                {Type.MEAN,new double[] {9,10,12,13,13}, 11.4},
-                {Type.MEAN,new double[] {0,0,0}, 0},
-                {Type.MEDIAN,new double[] {9,10,12,13,13}, 12},
-                {Type.STAND_DEV,new double[] {10,12,23,23}, 6.97614984548545},
-                {Type.EXCEPTION,null, 5},
-                {Type.INFEXCEPTION,new double[] {10,12,Double.POSITIVE_INFINITY,23}, 5},
-                {Type.INFEXCEPTION,new double[] {10,12,Double.NEGATIVE_INFINITY,23}, 5},
-                {Type.EXCEPTION,new double[] {}, 5}
-        });
-    }
 
-    private final StatisticUtilsArray calculator;
-    private final double[] array;
-    private final double actual_value;
-    private final Type type;
+    private StatisticUtilsArray calculator;
 
-    public StatisticUtilsArrayTest(Type type,double[] array,
-                                   double actual_value){
-        this.type = type;
+    @BeforeEach
+    public void setUpBeforeClass(){
         this.calculator = new StatisticUtilsArray();
-        this.array = array;
-        this.actual_value = actual_value;
     }
 
-    @Test
-    public void testMax() {
-        assumeTrue(type == Type.MAX);
-        assertThat(calculator.getMax(array)).isEqualByComparingTo(actual_value);
+    @ParameterizedTest
+    @MethodSource
+    public void testMax(double[] input, double expected) {
+        assertEquals(expected, calculator.getMax(input));
     }
 
-    @Test
-    public void testMin() {
-        assumeTrue(type == Type.MIN);
-        assertThat(calculator.getMin(array)).isEqualByComparingTo(actual_value);
+    static Stream<Arguments> testMax() {
+        return Stream.of(
+                Arguments.of(new double[] {1.38, 2.56, 4.3}, 4.3),
+                Arguments.of(new double[] {1.38, 2.56, 4.0}, 4.0),
+                Arguments.of(new double[]  {-1.0, -4.0, -1.0}, -1.0)
+        );
     }
 
-    @Test
-    public void testMean() {
-        assumeTrue(type == Type.MEAN);
-        assertThat(calculator.getMean(array)).isEqualByComparingTo(actual_value);
+    @ParameterizedTest
+    @MethodSource
+    public void testMin(double[] input, double expected) {
+        assertEquals(expected, calculator.getMin(input));
     }
 
-    @Test
-    public void testMedian() {
-        assumeTrue(type == Type.MEDIAN);
-        assertThat(calculator.getMedian(array)).isEqualByComparingTo(actual_value);
+    static Stream<Arguments> testMin() {
+        return Stream.of(
+                Arguments.of(new double[]  {1.38, 2.56, 4.3}, 1.38),
+                Arguments.of(new double[]  {5.0, 8.0, -5.0}, -5.0)
+        );
     }
 
-    @Test
-    public void testStandard_deviation() {
-        assumeTrue(type == Type.STAND_DEV);
-        assertThat(calculator.getStandard_deviation(array)).isEqualByComparingTo(actual_value);
+    @ParameterizedTest
+    @MethodSource
+    public void testMean(double[] input, double expected) {
+        assertEquals(expected, calculator.getMean(input));
     }
 
-    @Test
-    public void testExceptions() {
-        assumeTrue(type == Type.EXCEPTION);
-        try {
-            calculator.getMax(array);
-            fail("didn't throw an exception in getMax method in StatisticUtilsArray class!");
-        } catch (IllegalArgumentException ex) {
-            System.out.println("Exception  in getMax method in StatisticUtilsArray class");
-        }
-        try {
-            calculator.getMin(array);
-            fail("didn't throw an exception in getMin method in StatisticUtilsArray class!");
-        } catch (IllegalArgumentException ex) {
-            System.out.println("Exception in getMin method in StatisticUtilsArray class");
-        }
-        try {
-            calculator.getMedian(array);
-            fail("didn't throw an exception in getMedian method in StatisticUtilsArray class!");
-        } catch (IllegalArgumentException ex) {
-            System.out.println("Exception in getMedian method in StatisticUtilsArray class");
-        }
-        try {
-            calculator.getMean(array);
-            fail("didn't throw an exception in getMean method in StatisticUtilsArray class!");
-        } catch (IllegalArgumentException ex) {
-            System.out.println("Exception in getMean method in StatisticUtilsArray class");
-        }
-        try {
-            calculator.getStandard_deviation(array);
-            fail("didn't throw an exception in getStandard_deviation method in StatisticUtilsArray class!");
-        } catch (IllegalArgumentException ex) {
-            System.out.println("Exception in getStandard_deviation method in StatisticUtilsArray class");
-        }
+    static Stream<Arguments> testMean() {
+        return Stream.of(
+                Arguments.of(new double[] {9.0, 10.0, 12.0, 13.0, 13.0}, 11.4),
+                Arguments.of(new double[] {0.0, 0.0, 0.0}, 0.0)
+        );
     }
 
-    @Test
-    public void testInfinityExceptions() {
-        assumeTrue(type == Type.INFEXCEPTION);
-        try {
-            calculator.getMean(array);
-            fail("didn't throw an Infinity Exception in getMean method in StatisticUtilsArray class!");
-        } catch (IllegalArgumentException ex) {
-            System.out.println("Infinity Exception  in getMean method in StatisticUtilsArray class");
-        }
-        try {
-            calculator.getStandard_deviation(array);
-            fail("didn't throw an Infinity Exception in getStandard_deviation method in StatisticUtilsArray class!");
-        } catch (IllegalArgumentException ex) {
-            System.out.println("Infinity Exception  in getStandard_deviation method in StatisticUtilsArray class");
-        }
+    @ParameterizedTest
+    @MethodSource
+    public void testMedian(double[] input, double expected) {
+        assertEquals(expected, calculator.getMedian(input));
     }
+
+    static Stream<Arguments> testMedian() {
+        return Stream.of(
+                Arguments.of(new double[] {9.0, 10.0, 12.0, 13.0, 13.0}, 12.0),
+                Arguments.of(new double[] {0.0, 0.0, 0.0}, 0.0)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource
+    public void testStandardDeviation(double[] input, double expected) {
+        assertEquals(expected, calculator.getStandardDeviation(input));
+    }
+
+    static Stream<Arguments> testStandardDeviation() {
+        return Stream.of(
+                Arguments.of(new double[] {10.0, 12.0, 23.0, 23.0}, 6.97614984548545)
+        );
+    }
+
+    @ParameterizedTest
+    @NullAndEmptySource
+    void testMaxForNullAndEmptyArrays(double[] input) {
+        assertAll(
+                () -> assertThrows(IllegalArgumentException.class, () -> calculator.getMax(input),
+                        "didn't throw an exception in getMax method in StatisticUtilsArray class!"),
+                () -> assertThrows(IllegalArgumentException.class, () -> calculator.getMin(input),
+                        "didn't throw an exception in getMin method in StatisticUtilsArray class!"),
+                () -> assertThrows(IllegalArgumentException.class, () -> calculator.getMean(input),
+                        "didn't throw an exception in getMean method in StatisticUtilsArray class!"),
+                () -> assertThrows(IllegalArgumentException.class, () -> calculator.getMedian(input),
+                        "didn't throw an exception in getMedian method in StatisticUtilsArray class!"),
+                () -> assertThrows(IllegalArgumentException.class, () -> calculator.getStandardDeviation(input),
+                        "didn't throw an exception in getStandardDeviation method in StatisticUtilsArray class!")
+        );
+
+    }
+
+
+    @ParameterizedTest
+    @MethodSource
+    public void testInfinityExceptions(double[] input) {
+        assertAll(
+                () -> assertThrows(IllegalArgumentException.class, () -> calculator.getMean(input),
+                        "didn't throw an infinity exception in getMean method in StatisticUtilsArray class!"),
+                () -> assertThrows(IllegalArgumentException.class, () -> calculator.getStandardDeviation(input),
+                        "didn't throw an infinity exception in getStandardDeviation method in StatisticUtilsArray class!")
+        );
+
+    }
+
+    static Stream<Arguments> testInfinityExceptions() {
+        return Stream.of(
+                Arguments.of(new double[] {1.38,POSITIVE_INFINITY, 4.3}),
+                Arguments.of(new double[] {1.38, NEGATIVE_INFINITY, 4.3})
+        );
+    }
+
+
+
 }
