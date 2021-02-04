@@ -18,11 +18,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class AscendingMinimaTest {
 
+    // Initializing auxiliary variables.
     private AscendingMinima calculator;
 
+    /**
+     * This method is setting up the test environment by creating a calculator object using the void constructor.
+     */
     @BeforeEach
     public void setUpBeforeClass(){ calculator = new AscendingMinima(); }
 
+    /**
+     * This is a testing method for the initial state of the givenArray variable of the AscendingMinima class.
+     **/
     @Test
     public void getGivenArrayInitialState() {
 
@@ -30,6 +37,9 @@ public class AscendingMinimaTest {
 
     }
 
+    /**
+     * This is a testing method for the initial state of the windowSize variable of the AscendingMinima class.
+     **/
     @Test
     public void getWindowSizeInitialState() {
 
@@ -37,6 +47,10 @@ public class AscendingMinimaTest {
 
     }
 
+    /**
+     * This method is used for testing the setter method for the givenArray variable of the AscendingMinima class.
+     * In this parameterized test case the input is null and empty.
+     **/
     @ParameterizedTest
     @NullAndEmptySource
     void setArrayNullOrEmptyInput(double[] input) {
@@ -49,6 +63,10 @@ public class AscendingMinimaTest {
 
     }
 
+    /**
+     * This method is used for testing the setter method for the givenArray variable of the AscendingMinima class.
+     * In this test case the input is an array of smaller than windowSize value length.
+     **/
     @Test
     public void setArrayWithLengthSmallerThanWindowSize() {
 
@@ -64,6 +82,10 @@ public class AscendingMinimaTest {
     }
 
 
+    /**
+     * This method is used for testing the setter method for the windowSize variable of the AscendingMinima class.
+     * In this parameterized test case the input is zero or negative.
+     **/
     @ParameterizedTest
     @ValueSource(ints = {0,-6})
     public void setWindowSizeNegativeAndZeroInput(int value) {
@@ -77,6 +99,10 @@ public class AscendingMinimaTest {
 
     }
 
+    /**
+     * This method is used for testing the setter method for the windowSize variable of the AscendingMinima class.
+     * In this parameterized test case the input is a positive number.
+     **/
     @ParameterizedTest
     @ValueSource(ints = {5,6})
     public void setWindowSizePositiveInput(int value) {
@@ -90,6 +116,9 @@ public class AscendingMinimaTest {
 
     }
 
+    /**
+     * This method is used for testing the setter method for the givenArray variable of the AscendingMinima class.
+     **/
     @ParameterizedTest
     @MethodSource
     public void setArrayInput(double[] value) {
@@ -108,6 +137,10 @@ public class AscendingMinimaTest {
         );
     }
 
+    /**
+     * This method is used for testing the setter method for the windowSize variable of the AscendingMinima class.
+     * In this test case the input is an windowSize with value of greater than givenArray length.
+     **/
     @Test
     public void setWindowSizeGreaterThanArrayLength() {
 
@@ -123,6 +156,9 @@ public class AscendingMinimaTest {
 
     }
 
+    /**
+     * This method is used for testing the void constructor of the AscendingMinima class.
+     **/
     @Test
     public void checkIfNullConstructorGivesNullObject() {
 
@@ -131,6 +167,9 @@ public class AscendingMinimaTest {
 
     }
 
+    /**
+     * This method is used for testing the main constructor of the AscendingMinima class.
+     **/
     @Test
     public void Constructor() {
 
@@ -149,6 +188,10 @@ public class AscendingMinimaTest {
 
     }
 
+    /**
+     * This method is used for testing the getFirstWindow method of the AscendingMinima class.
+     * In this test case windowSize is not initialized, so an exception is expected.
+     **/
     @Test
     public void getFirstWindowZeroWindowSizeInput() {
 
@@ -162,6 +205,10 @@ public class AscendingMinimaTest {
 
     }
 
+    /**
+     * This method is used for testing the getFirstWindow method of the AscendingMinima class.
+     * In this test case givenArray is not initialized, so an exception is expected.
+     **/
     @Test
     public void getFirstWindowNullArrayInput() {
 
@@ -175,6 +222,9 @@ public class AscendingMinimaTest {
 
     }
 
+    /**
+     * This method is a positive scenario test of the getFirstWindow method of the AscendingMinima class.
+     **/
     @ParameterizedTest
     @MethodSource
     public void getFirstWindowTrueTest(double[] inputArray, int windowSize, List<Double> outputArray){
@@ -197,6 +247,9 @@ public class AscendingMinimaTest {
         );
     }
 
+    /**
+     * This method is a negative scenario test of the getFirstWindow method of the AscendingMinima class.
+     **/
     @ParameterizedTest
     @MethodSource
     public void getFirstWindowFalseTest(double[] inputArray, int windowSize, List<Double> outputArray){
@@ -219,6 +272,9 @@ public class AscendingMinimaTest {
         );
     }
 
+    /**
+     * This method is a positive scenario test of the getFirstAscendingMinima method of the AscendingMinima class.
+     **/
     @ParameterizedTest
     @MethodSource
     public void getFirstAscendingMinimaTest(double[] inputArray, int windowSize, List<Double> outputArray){
@@ -241,6 +297,9 @@ public class AscendingMinimaTest {
         );
     }
 
+    /**
+     * This method is a negative scenario test of the getFirstAscendingMinima method of the AscendingMinima class.
+     **/
     @ParameterizedTest
     @MethodSource
     public void getFirstAscendingMinimaFalseTest(double[] inputArray, int windowSize, List<Double> outputArray){
@@ -263,6 +322,9 @@ public class AscendingMinimaTest {
         );
     }
 
+    /**
+     * This method is a positive scenario test of the getAscendingMinima method of the AscendingMinima class.
+     **/
     @ParameterizedTest
     @MethodSource
     public void getAscendingMinimaTest(double[] inputArray, int windowSize, double[] outputArray){

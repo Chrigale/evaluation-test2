@@ -16,9 +16,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class StatisticUtilsArrayListUsingGenericsTest<T extends Number> {
 
+    // Initializing auxiliary variables.
     private StatisticUtilsArrayListUsingGenerics<Integer> IntegerCalculator;
     private StatisticUtilsArrayListUsingGenerics<Double>  DoubleCalculator;
 
+    /**
+     * This method is setting up the test environment by creating an IntegerCalculator and a DoubleCalculator object using the void constructor.
+     */
     @BeforeEach
     void setUpBeforeClass(){
 
@@ -26,6 +30,9 @@ public class StatisticUtilsArrayListUsingGenericsTest<T extends Number> {
         DoubleCalculator  = new StatisticUtilsArrayListUsingGenerics<>();
     }
 
+    /**
+     * This method is used for testing the getMax() method of the StatisticUtilsArrayListUsingGenerics class for Integer objects.
+     **/
     @ParameterizedTest
     @MethodSource
     public void testMaxIntegerInput(List<Integer> input, double expected) { assertEquals(expected, IntegerCalculator.getMax(input));}
@@ -39,6 +46,9 @@ public class StatisticUtilsArrayListUsingGenericsTest<T extends Number> {
         );
     }
 
+    /**
+     * This method is used for testing the getMax() method of the StatisticUtilsArrayListUsingGenerics class for Double objects.
+     **/
     @ParameterizedTest
     @MethodSource
     public void testMaxDoubleInput(List<Double> input, double expected) { assertEquals(expected, DoubleCalculator.getMax(input)); }
@@ -52,6 +62,9 @@ public class StatisticUtilsArrayListUsingGenericsTest<T extends Number> {
         );
     }
 
+    /**
+     * This method is used for testing the getMin() method of the StatisticUtilsArrayListUsingGenerics class for Integer objects.
+     **/
     @ParameterizedTest
     @MethodSource
     public void testMinIntegerInput(List<Integer> input, double expected) { assertEquals(expected, IntegerCalculator.getMin(input));}
@@ -65,6 +78,9 @@ public class StatisticUtilsArrayListUsingGenericsTest<T extends Number> {
         );
     }
 
+    /**
+     * This method is used for testing the getMin() method of the StatisticUtilsArrayListUsingGenerics class for Double objects.
+     **/
     @ParameterizedTest
     @MethodSource
     public void testMinDoubleInput(List<Double> input, double expected) { assertEquals(expected, DoubleCalculator.getMin(input)); }
@@ -78,6 +94,9 @@ public class StatisticUtilsArrayListUsingGenericsTest<T extends Number> {
         );
     }
 
+    /**
+     * This method is used for testing the getMean() method of the StatisticUtilsArrayListUsingGenerics class for Integer objects.
+     **/
     @ParameterizedTest
     @MethodSource
     public void testMeanIntegerInput(List<Integer> input, double expected) { assertEquals(expected, IntegerCalculator.getMean(input));}
@@ -90,6 +109,9 @@ public class StatisticUtilsArrayListUsingGenericsTest<T extends Number> {
         );
     }
 
+    /**
+     * This method is used for testing the getMean() method of the StatisticUtilsArrayListUsingGenerics class for Double objects.
+     **/
     @ParameterizedTest
     @MethodSource
     public void testMeanDoubleInput(List<Double> input, double expected) { assertEquals(expected, DoubleCalculator.getMean(input)); }
@@ -102,6 +124,9 @@ public class StatisticUtilsArrayListUsingGenericsTest<T extends Number> {
         );
     }
 
+    /**
+     * This method is used for testing the getMedian() method of the StatisticUtilsArrayListUsingGenerics class for Integer objects.
+     **/
     @ParameterizedTest
     @MethodSource
     public void testMedianIntegerInput(List<Integer> input, double expected) { assertEquals(expected, IntegerCalculator.getMedian(input));}
@@ -114,6 +139,9 @@ public class StatisticUtilsArrayListUsingGenericsTest<T extends Number> {
         );
     }
 
+    /**
+     * This method is used for testing the getMedian() method of the StatisticUtilsArrayListUsingGenerics class for Double objects.
+     **/
     @ParameterizedTest
     @MethodSource
     public void testMedianDoubleInput(List<Double> input, double expected) { assertEquals(expected, DoubleCalculator.getMedian(input)); }
@@ -126,6 +154,9 @@ public class StatisticUtilsArrayListUsingGenericsTest<T extends Number> {
         );
     }
 
+    /**
+     * This method is used for testing the getStandardDeviation() method of the StatisticUtilsArrayListUsingGenerics class for Integer objects.
+     **/
     @ParameterizedTest
     @MethodSource
     public void testStandardDeviationIntegerInput(List<Integer> input, double expected) { assertEquals(expected, IntegerCalculator.getStandardDeviation(input));}
@@ -138,6 +169,9 @@ public class StatisticUtilsArrayListUsingGenericsTest<T extends Number> {
         );
     }
 
+    /**
+     * This method is used for testing the getStandardDeviation() method of the StatisticUtilsArrayListUsingGenerics class for Double objects.
+     **/
     @ParameterizedTest
     @MethodSource
     public void testStandardDeviationDoubleInput(List<Double> input, double expected) { assertEquals(expected, DoubleCalculator.getStandardDeviation(input)); }
@@ -150,6 +184,10 @@ public class StatisticUtilsArrayListUsingGenericsTest<T extends Number> {
         );
     }
 
+    /**
+     * This method is used for testing the getMax() , getMin() , getMean() , getMedian() , getStandardDeviation() methods of
+     * StatisticUtilsArrayListUsingGenerics<Integer> class for null and empty inputs.
+     */
     @ParameterizedTest
     @NullAndEmptySource
     void testForNullAndEmptyIntegerArrays(List<Integer> input) {
@@ -178,6 +216,10 @@ public class StatisticUtilsArrayListUsingGenericsTest<T extends Number> {
 
     }
 
+    /**
+     * This method is used for testing the getMax() , getMin() , getMean() , getMedian() , getStandardDeviation() methods of
+     * StatisticUtilsArrayListUsingGenerics<Double> class for null and empty inputs.
+     */
     @ParameterizedTest
     @NullAndEmptySource
     void testForNullAndEmptyDoubleArrays(List<Double> input) {
@@ -206,6 +248,10 @@ public class StatisticUtilsArrayListUsingGenericsTest<T extends Number> {
 
     }
 
+    /**
+     * This method is used for testing the getMean() and getStandardDeviation() methods of StatisticUtilsArrayListUsingGenerics<Double> class
+     * for inputs that contains infinity as a value.
+     */
     @ParameterizedTest
     @MethodSource
     public void testInfinityExceptions(List<Double> input) {
@@ -228,7 +274,10 @@ public class StatisticUtilsArrayListUsingGenericsTest<T extends Number> {
     }
 
 
-
+    /**
+     * This method is used for testing the getMean() and getStandardDeviation() methods of StatisticUtilsArrayListUsingGenerics<Integer> class
+     * for inputs that contains infinity as a value.
+     */
     @ParameterizedTest
     @MethodSource
     public void testInfinityExceptionsForIntegerArray(List<Integer> input) {

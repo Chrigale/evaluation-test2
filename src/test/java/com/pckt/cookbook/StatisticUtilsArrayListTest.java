@@ -15,13 +15,20 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class StatisticUtilsArrayListTest {
 
+    // Initializing auxiliary variables.
     private StatisticUtilsArrayList calculator;
 
+    /**
+     * This method is setting up the test environment by creating a calculator object using the void constructor.
+     */
     @BeforeEach
     void setUpBeforeClass(){
         calculator = new StatisticUtilsArrayList();
     }
 
+    /**
+     * This method is used for testing the getMax() method of the StatisticUtilsArrayList class.
+     **/
     @ParameterizedTest
     @MethodSource
     public void testMax(List<Double> input, double expected) {
@@ -37,6 +44,9 @@ public class StatisticUtilsArrayListTest {
         );
     }
 
+    /**
+     * This method is used for testing the getMin() method of the StatisticUtilsArrayList class.
+     **/
     @ParameterizedTest
     @MethodSource
     public void testMin(List<Double> input, double expected) {
@@ -51,6 +61,9 @@ public class StatisticUtilsArrayListTest {
         );
     }
 
+    /**
+     * This method is used for testing the getMean() method of the StatisticUtilsArrayList class.
+     **/
     @ParameterizedTest
     @MethodSource
     public void testMean(List<Double> input, double expected) {
@@ -65,6 +78,9 @@ public class StatisticUtilsArrayListTest {
         );
     }
 
+    /**
+     * This method is used for testing the getMedian() method of the StatisticUtilsArrayList class.
+     **/
     @ParameterizedTest
     @MethodSource
     public void testMedian(List<Double> input, double expected) {
@@ -79,6 +95,9 @@ public class StatisticUtilsArrayListTest {
         );
     }
 
+    /**
+     * This method is used for testing the getStandardDeviation() method of the StatisticUtilsArrayList class.
+     **/
     @ParameterizedTest
     @MethodSource
     public void testStandardDeviation(List<Double> input, double expected) {
@@ -92,6 +111,10 @@ public class StatisticUtilsArrayListTest {
         );
     }
 
+    /**
+     * This method is used for testing the getMax() , getMin() , getMean() , getMedian() , getStandardDeviation() methods of StatisticUtilsArrayList class
+     * for null and empty inputs.
+     */
     @ParameterizedTest
     @NullAndEmptySource
     void testForNullAndEmptyArrays(List<Double> input) {
@@ -121,6 +144,10 @@ public class StatisticUtilsArrayListTest {
     }
 
 
+    /**
+     * This method is used for testing the getMean() and getStandardDeviation() methods of StatisticUtilsArrayList class
+     * for inputs that contains infinity as a value.
+     */
     @ParameterizedTest
     @MethodSource
     public void testInfinityExceptions(List<Double> input) {

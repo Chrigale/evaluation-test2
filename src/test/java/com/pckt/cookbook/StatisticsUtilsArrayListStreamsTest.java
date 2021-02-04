@@ -15,13 +15,20 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class StatisticsUtilsArrayListStreamsTest {
 
+    // Initializing auxiliary variables.
     private StatisticsUtilsArrayListStreams calculator;
 
+    /**
+     * This method is setting up the test environment by creating a calculator object using the void constructor.
+     */
     @BeforeEach
     public void setUpBeforeClass(){
         this.calculator = new StatisticsUtilsArrayListStreams();
     }
 
+    /**
+     * This method is used for testing the getMax() method of the StatisticsUtilsArrayListStreams class.
+     **/
     @ParameterizedTest
     @MethodSource
     public void testMax(List<Double> input, double expected) {
@@ -37,6 +44,9 @@ public class StatisticsUtilsArrayListStreamsTest {
         );
     }
 
+    /**
+     * This method is used for testing the getMin() method of the StatisticsUtilsArrayListStreams class.
+     **/
     @ParameterizedTest
     @MethodSource
     public void testMin(List<Double> input, double expected) {
@@ -51,6 +61,9 @@ public class StatisticsUtilsArrayListStreamsTest {
         );
     }
 
+    /**
+     * This method is used for testing the getMean() method of the StatisticsUtilsArrayListStreams class.
+     **/
     @ParameterizedTest
     @MethodSource
     public void testMean(List<Double> input, double expected) {
@@ -65,6 +78,9 @@ public class StatisticsUtilsArrayListStreamsTest {
         );
     }
 
+    /**
+     * This method is used for testing the getMedian() method of the StatisticsUtilsArrayListStreams class.
+     **/
     @ParameterizedTest
     @MethodSource
     public void testMedian(List<Double> input, double expected) {
@@ -79,6 +95,9 @@ public class StatisticsUtilsArrayListStreamsTest {
         );
     }
 
+    /**
+     * This method is used for testing the getStandardDeviation() method of the StatisticsUtilsArrayListStreams class.
+     **/
     @ParameterizedTest
     @MethodSource
     public void testStandardDeviation(List<Double> input, double expected) {
@@ -92,6 +111,10 @@ public class StatisticsUtilsArrayListStreamsTest {
         );
     }
 
+    /**
+     * This method is used for testing the getMax() , getMin() , getMean() , getMedian() , getStandardDeviation() methods of StatisticsUtilsArrayListStreams class
+     * for null and empty inputs.
+     */
     @ParameterizedTest
     @NullAndEmptySource
     void testMaxForNullAndEmptyArrays(List<Double> input) {
@@ -118,7 +141,10 @@ public class StatisticsUtilsArrayListStreamsTest {
 
     }
 
-
+    /**
+     * This method is used for testing the getMean() and getStandardDeviation() methods of StatisticsUtilsArrayListStreams class
+     * for inputs that contains infinity as a value.
+     */
     @ParameterizedTest
     @MethodSource
     public void testInfinityExceptions(List<Double> input) {
