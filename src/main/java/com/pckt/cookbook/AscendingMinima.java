@@ -1,7 +1,6 @@
 package com.pckt.cookbook;
 
 import java.lang.reflect.Array;
-import org.junit.jupiter.api.BeforeEach;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -12,7 +11,7 @@ import java.util.stream.Collectors;
  */
 public class AscendingMinima {
     private int windowSize;
-    private double[] givenArray;
+    private double[] givenArray = {};
 
 
     /**
@@ -21,7 +20,10 @@ public class AscendingMinima {
     public AscendingMinima(){}
 
     /**
-     *This is a constructor of AscendingMinima that gets a
+     *This is a constructor of AscendingMinima class that sets the values of variables givenArray and defaultWindowSize for the calculation of ascending minima.
+     *
+     * @param givenArray        The array of which the ascending minima will be calculated, as an array of double numbers.
+     * @param defaultWindowSize The size of sliding window to be used for minima calculation of given array, as an int.
      */
     public AscendingMinima(double[] givenArray, int defaultWindowSize){
 
@@ -30,12 +32,21 @@ public class AscendingMinima {
 
     }
 
+    /**
+     *This is a method that set the value of defaultWindowSize variable.
+     *
+     * @param windowSize The size of sliding window to be used for minima calculation of given array, as an int.
+     *
+     * @throws IllegalArgumentException if windowSize is not a positive number.
+     * @throws IllegalArgumentException if windowSize is smaller than the length of the givenArray,only if the latter is not empty.
+     */
+
     public void setWindowSize(int windowSize){
         if (windowSize <= 0)
 
             throw new IllegalArgumentException("Window_size needs to be greater than zero.");
 
-        if (givenArray != null && givenArray.length < windowSize)
+        if (givenArray.length != 0 && givenArray.length < windowSize)
 
             throw new IllegalArgumentException("Window_size needs to be greater than array length.");
 
@@ -43,6 +54,14 @@ public class AscendingMinima {
 
 
     }
+
+    /**
+     *This is a method that set the value of givenArray variable.
+     *
+     * @param givenArray The array of which the ascending minima will be calculated.
+     *
+     * @throws IllegalArgumentException if givenArray is null or empty or smaller than windowSize.
+     */
 
     public void setArray(double[] givenArray){
         if (givenArray == null ||givenArray.length == 0 || givenArray.length < windowSize)
@@ -55,21 +74,38 @@ public class AscendingMinima {
     }
 
 
+    /**
+     *This is a method that returns the value of givenArray variable.
+     *
+     * @return the givenArray, as an array of double numbers.
+     */
     public double[] getGivenArray() {
 
         return this.givenArray;
 
-
     }
+
+    /**
+     *This is a method that returns the value of windowSize variable.
+     *
+     * @return the windowSize, as an int.
+     */
     public int getWindowSize() {
 
         return this.windowSize;
 
     }
 
+    /**
+     *This is a method that returns an array list of only the first n values of givenArray, where n is windowSize value.
+     *
+     * @return the aforementioned array list, as an array list of Double objects.
+     *
+     * @throws IllegalArgumentException if windowSize is zero or givenArray is empty.
+     */
     List<Double> getFirstWindow(){
 
-        if (this.windowSize == 0 || this.givenArray == null)
+        if (this.windowSize == 0 || this.givenArray.length == 0)
 
             throw new IllegalArgumentException("You forgot to set windowSize or givenArray arguments.");
 
@@ -77,11 +113,17 @@ public class AscendingMinima {
 
     }
 
+    /**
+     *This is a method that adds the minimum of window array list to ascendingMinima array list and delete all values preceding
+     * the selected minimum along with it from window and repeat process until window is empty.
+     *
+     * @return ascendingMinima The aforementioned array list, as an array list of Double objects.
+     */
     List<Double> getFirstAscendingMinima(){
 
-        List<Double> window = getFirstWindow();
-        StatisticUtilsArrayList gun = new StatisticUtilsArrayList();
         List<Double> ascendingMinima = new ArrayList<>();
+        List<Double> window          = getFirstWindow();
+        StatisticUtilsArrayList gun  = new StatisticUtilsArrayList();
 
         while (!window.isEmpty()) {
 
@@ -95,12 +137,10 @@ public class AscendingMinima {
 
 
     /**
-     * Gets an array of double values (size of n) along with a sliding window size (k) as it is described in the algorithm description
-     * and returns an array of n-k+1 double values containing the minimum values per k elements of the original array
+     * This is a method that returns an array of n-k-1 values containing the minimum values per k elements of the givenArray,
+     * where n is the size of the latter and k is the value of slidingWindow variable.
      *
-     * @return The array of n-k+1 double values
-     *
-     * @throws IllegalArgumentException If either invalid input array or window size are provided.
+     * @return The aforementioned array of n-k+1 double values,as an array of double values.
      */
 
     public double[] getAscendingMinima(){
@@ -111,7 +151,7 @@ public class AscendingMinima {
 
 
         List<Double> finalAscendingMinima = new ArrayList<>();
-        List<Double> ascendingMinima = getFirstAscendingMinima();
+        List<Double> ascendingMinima      = getFirstAscendingMinima();
 
         /* Add the first of ascending_minima list to finalExit list */
         finalAscendingMinima.add(ascendingMinima.get(0));

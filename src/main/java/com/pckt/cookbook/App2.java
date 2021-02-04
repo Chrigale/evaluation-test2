@@ -50,7 +50,7 @@ public class App2 {
     List<Integer> list3 = Arrays.asList(1,2,3,4,5);
     StatisticUtilsArrayListUsingGenerics<Integer> gab = new StatisticUtilsArrayListUsingGenerics<>();
 
-        System.out.println(gab.getMax(list3));
+
 
 
     double[] values = {-5, -4, 10, 20, 50};
@@ -59,9 +59,13 @@ public class App2 {
     list2.add(-0.0);
     StatisticUtilsArray bob = new StatisticUtilsArray();
 
-    AscendingMinima marley = new AscendingMinima(values,3);
+    AscendingMinima marley = new AscendingMinima();
 
-        System.out.println(marley.getFirstAscendingMinima());
+        System.out.println(Arrays.toString(marley.getGivenArray()));
+
+        if (marley.getGivenArray().length == 0) System.out.println("true");
+
+        marley.setArray(null);
 
 
 
