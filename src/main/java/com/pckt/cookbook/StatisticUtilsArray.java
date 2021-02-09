@@ -8,7 +8,6 @@ import java.util.Arrays;
 
 /**
  * This class is responsible for providing a set of statistical values for an array of double values.
- *
  */
 class StatisticUtilsArray {
 
@@ -22,13 +21,12 @@ class StatisticUtilsArray {
      * @throws IllegalArgumentException If an null or empty array is provided.
      */
     public double getMax(double[] givenArray) {
+
         if (givenArray == null || givenArray.length == 0)
 
             throw new IllegalArgumentException("Input array cannot be null or empty");
 
-
         return StatUtils.max(givenArray);
-
     }
 
     /**
@@ -41,13 +39,12 @@ class StatisticUtilsArray {
      * @throws IllegalArgumentException If an null or empty array is provided.
      */
     public double getMin(double[] givenArray) {
+
         if (givenArray == null || givenArray.length == 0)
 
             throw new IllegalArgumentException("Input array cannot be null or empty");
 
-
         return  StatUtils.min(givenArray);
-
     }
 
     /**
@@ -61,17 +58,16 @@ class StatisticUtilsArray {
      * @throws IllegalArgumentException If an array that contains infinity as a value is provided.
      */
     public double getMean(double[] givenArray) {
+
         if (givenArray == null || givenArray.length == 0)
 
             throw new IllegalArgumentException("Input array mean calculation cannot be null or empty");
 
-        if(Arrays.toString(givenArray).contains("Infinity"))
+        if (Arrays.toString(givenArray).contains("Infinity"))
 
             throw new IllegalArgumentException("Input array mean calculation cannot contain infinity");
 
-
         return StatUtils.mean(givenArray);
-
     }
 
     /**
@@ -84,14 +80,13 @@ class StatisticUtilsArray {
      * @throws IllegalArgumentException If an null or empty array is provided.
      */
     public double getMedian(double[] givenArray) {
+
         if (givenArray == null || givenArray.length == 0)
 
             throw new IllegalArgumentException("Input array median calculation cannot be null or empty");
 
-
         Median median = new Median();
         return median.evaluate(givenArray);
-
     }
 
     /**
@@ -105,17 +100,16 @@ class StatisticUtilsArray {
      * @throws IllegalArgumentException If an array that contains infinity as a value is provided.
      */
     public double getStandardDeviation(double[] givenArray) {
+
         if (givenArray == null || givenArray.length == 0)
 
             throw new IllegalArgumentException("Input array standard_deviation calculation cannot be null or empty");
 
-        if(Arrays.toString(givenArray).contains("Infinity"))
+        if (Arrays.toString(givenArray).contains("Infinity"))
 
             throw new IllegalArgumentException("Input array standard_deviation calculation cannot be null or empty");
 
-
         StandardDeviation sdv = new StandardDeviation();
         return sdv.evaluate(givenArray);
-
     }
 }

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static java.lang.Double.NEGATIVE_INFINITY;
+
 public class App2 {
     public static void main(String[] args ) {
 /*
@@ -46,29 +48,15 @@ public class App2 {
         AscendingMinima marley = new AscendingMinima();
         System.out.println("Requested output : " + Arrays.toString(marley.getRequested_exit(array_ex,2)));
 */
-    List<Double> list = Arrays.asList(1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0);
+    List<Double> list = Arrays.asList(1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,NEGATIVE_INFINITY);
     List<Integer> list3 = Arrays.asList(1,2,3,4,5);
     StatisticUtilsArrayListUsingGenerics<Integer> gab = new StatisticUtilsArrayListUsingGenerics<>();
 
 
 
 
-    double[] values = {-5, -4, 10, 20, 50};
-    List<Double> list2 = new ArrayList<>();
-    list2.add(-0.0);
-    list2.add(-0.0);
-    StatisticUtilsArray bob = new StatisticUtilsArray();
-
-    AscendingMinima marley = new AscendingMinima();
-
-        System.out.println(Arrays.toString(marley.getGivenArray()));
-
-        if (marley.getGivenArray().length == 0) System.out.println("true");
-
-        marley.setArray(null);
-
-
-
+    double[] values = {5d,-8d,15d, 0d,-1d,9d};
+    AscendingMinima marley  = new AscendingMinima(2, values);
+        System.out.println(Arrays.toString(marley.getAscendingMinima()));
     }
-
 }

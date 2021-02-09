@@ -3,10 +3,6 @@ package com.pckt.cookbook;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static java.lang.Double.NEGATIVE_INFINITY;
-import static java.lang.Double.POSITIVE_INFINITY;
-
-
 /**
  * This class is responsible for providing a set of statistical values for an array list of T objects utilizing Java generics,
  * where T is a Numerical data type.
@@ -23,14 +19,13 @@ public class StatisticUtilsArrayListUsingGenerics<T extends Number> {
      * @throws IllegalArgumentException If an invalid input array is provided.
      */
     public double getMax(List<T> givenList){
-        if (givenList == null || givenList.size() == 0)
 
-            throw new IllegalArgumentException("Input arraylist max calculation cannot be null or empty");
+        if (givenList == null)
 
+            throw new IllegalArgumentException("Input arraylist max calculation cannot be null.");
 
-        List<Double> doubleArray = givenList.stream().map(Number::doubleValue).collect(Collectors.toList());
-        StatisticUtilsArrayList bob = new StatisticUtilsArrayList();
-        return bob.getMax(doubleArray);
+        List<Double> doubleArray    = givenList.stream().map(Number::doubleValue).collect(Collectors.toList());
+        return StatisticUtilsArrayList.getMax(doubleArray);
     }
 
     /**
@@ -43,14 +38,13 @@ public class StatisticUtilsArrayListUsingGenerics<T extends Number> {
      * @throws IllegalArgumentException If an invalid input array is provided.
      */
     public  double getMin(List<T> givenList){
-        if (givenList == null || givenList.size() == 0)
 
-            throw new IllegalArgumentException("Input arraylist max calculation cannot be null or empty");
+        if (givenList == null)
 
+            throw new IllegalArgumentException("Input arraylist max calculation cannot be null.");
 
-        List<Double> doubleArray = givenList.stream().map(Number::doubleValue).collect(Collectors.toList());
-        StatisticUtilsArrayList bob = new StatisticUtilsArrayList();
-        return bob.getMin(doubleArray);
+        List<Double> doubleArray    = givenList.stream().map(Number::doubleValue).collect(Collectors.toList());
+        return StatisticUtilsArrayList.getMin(doubleArray);
     }
 
     /**
@@ -63,15 +57,13 @@ public class StatisticUtilsArrayListUsingGenerics<T extends Number> {
      * @throws IllegalArgumentException If an invalid input array is provided.
      */
     public double getMedian(List<T> givenList){
-        if (givenList == null || givenList.size() == 0)
 
-            throw new IllegalArgumentException("Input arraylist max calculation cannot be null or empty");
+        if (givenList == null)
 
+            throw new IllegalArgumentException("Input arraylist max calculation cannot be null.");
 
-        List<Double> doubleArray = givenList.stream().map(Number::doubleValue).collect(Collectors.toList());
-        StatisticUtilsArrayList bob = new StatisticUtilsArrayList();
-        return bob.getMedian(doubleArray);
-
+        List<Double> doubleArray    = givenList.stream().map(Number::doubleValue).collect(Collectors.toList());
+        return StatisticUtilsArrayList.getMedian(doubleArray);
     }
 
     /**
@@ -84,18 +76,13 @@ public class StatisticUtilsArrayListUsingGenerics<T extends Number> {
      * @throws IllegalArgumentException If an invalid input array is provided.
      */
     public double getMean(List<T> givenList){
-        if (givenList == null || givenList.size() == 0)
 
-            throw new IllegalArgumentException("Input arraylist max calculation cannot be null or empty");
+        if (givenList == null)
 
-        if (givenList.contains(NEGATIVE_INFINITY) || givenList.contains(POSITIVE_INFINITY))
+            throw new IllegalArgumentException("Input arraylist max calculation cannot be null.");
 
-            throw new IllegalArgumentException("Input arraylist mean calculation cannot contain infinity");
-
-
-        List<Double> doubleArray = givenList.stream().map(Number::doubleValue).collect(Collectors.toList());
-        StatisticUtilsArrayList bob = new StatisticUtilsArrayList();
-        return bob.getMean(doubleArray);
+        List<Double> doubleArray    = givenList.stream().map(Number::doubleValue).collect(Collectors.toList());
+        return StatisticUtilsArrayList.getMean(doubleArray);
     }
 
     /**
@@ -108,19 +95,11 @@ public class StatisticUtilsArrayListUsingGenerics<T extends Number> {
      * @throws IllegalArgumentException If an invalid input array is provided.
      */
     public double getStandardDeviation(List<T> givenList){
-        if (givenList == null || givenList.size() == 0)
+        if (givenList == null)
 
             throw new IllegalArgumentException("Input arraylist max calculation cannot be null or empty");
 
-        if (givenList.contains(NEGATIVE_INFINITY) || givenList.contains(POSITIVE_INFINITY))
-
-            throw new IllegalArgumentException("Input arraylist Standard Deviation calculation cannot contain infinity");
-
-
-        List<Double> doubleArray = givenList.stream().map(Number::doubleValue).collect(Collectors.toList());
-        StatisticUtilsArrayList bob = new StatisticUtilsArrayList();
-        return bob.getStandardDeviation(doubleArray);
+        List<Double> doubleArray    = givenList.stream().map(Number::doubleValue).collect(Collectors.toList());
+        return StatisticUtilsArrayList.getStandardDeviation(doubleArray);
     }
-
-
 }

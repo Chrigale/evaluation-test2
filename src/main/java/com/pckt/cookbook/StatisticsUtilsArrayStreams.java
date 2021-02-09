@@ -19,14 +19,14 @@ public class StatisticsUtilsArrayStreams {
      * @throws IllegalArgumentException If an null or empty array is provided.
      */
     public double getMax(double[] givenArray) {
+
         if (givenArray == null || givenArray.length == 0)
 
             throw new IllegalArgumentException("Input array for max calculation cannot be null or empty");
 
-
         return Arrays.stream(givenArray).max().orElse(-1);
-
     }
+
     /**
      * Gets an array of double values as input and returns the minimum of these values.
      *
@@ -37,14 +37,14 @@ public class StatisticsUtilsArrayStreams {
      * @throws IllegalArgumentException If an null or empty array is provided.
      */
     public double getMin(double[] givenArray) {
+
         if (givenArray == null || givenArray.length == 0)
 
             throw new IllegalArgumentException("Input array min calculation cannot be null or empty");
 
-
         return Arrays.stream(givenArray).min().orElse(-1);
-
     }
+
     /**
      * Gets an array of double values as input and returns the mean of these values.
      *
@@ -56,6 +56,7 @@ public class StatisticsUtilsArrayStreams {
      * @throws IllegalArgumentException If an array that contains infinity as a value is provided.
      */
     public double getMean(double[] givenArray) {
+
         if (givenArray == null || givenArray.length == 0)
 
             throw new IllegalArgumentException("Input array mean calculation cannot be null or empty");
@@ -64,11 +65,9 @@ public class StatisticsUtilsArrayStreams {
 
             throw new IllegalArgumentException("Input array median calculation cannot contain infinity");
 
-
         return Arrays.stream(givenArray).average().orElse(-1);
-
-
     }
+
     /**
      * Gets an array of double values as input and returns the median of these values.
      *
@@ -79,15 +78,15 @@ public class StatisticsUtilsArrayStreams {
      * @throws IllegalArgumentException If an null or empty array is provided.
      */
     public double getMedian(double[] givenArray) {
+
         if (givenArray == null || givenArray.length == 0)
 
             throw new IllegalArgumentException("Input array median calculation cannot be null or empty");
 
-
         return Arrays.stream(givenArray).sorted().skip(Math.max(0, ((givenArray.length + 1) / 2) - 1))
                     .limit(1 + (1 + givenArray.length) % 2).average().orElse(-1);
-
     }
+
     /**
      * Gets an array of double values as input and returns the Standard deviation of these values.
      *
@@ -99,6 +98,7 @@ public class StatisticsUtilsArrayStreams {
      * @throws IllegalArgumentException If an array that contains infinity as a value is provided.
      */
     public double getStandardDeviation(double[] givenArray) {
+
         if (givenArray == null || givenArray.length == 0)
 
             throw new IllegalArgumentException("Input array standard_deviation calculation cannot be null or empty");
@@ -107,13 +107,10 @@ public class StatisticsUtilsArrayStreams {
 
             throw new IllegalArgumentException("Input array standard_deviation calculation cannot be null or empty");
 
-
         double variance = Arrays.stream(givenArray)
                 .map(i -> i - this.getMean(givenArray))
-                .map(i -> i*i)
+                .map(i -> i * i)
                 .sum();
-        variance = variance/(givenArray.length-1);
-        return sqrt(variance);
-
+        return sqrt(variance/(givenArray.length-1));
     }
 }

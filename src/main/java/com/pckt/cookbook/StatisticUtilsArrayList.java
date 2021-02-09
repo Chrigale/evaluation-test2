@@ -22,19 +22,16 @@ public class StatisticUtilsArrayList {
      *
      * @throws IllegalArgumentException If an null or empty array list is provided.
      */
-    public double getMax(List<Double> givenList) {
+    public static double getMax(List<Double> givenList) {
 
         if (givenList == null || givenList.isEmpty())
 
             throw new IllegalArgumentException("Input arraylist max calculation cannot be null or empty");
 
-
         double[] array = givenList.stream().mapToDouble(i -> i).toArray();
         DescriptiveStatistics stats = new DescriptiveStatistics();
         for (Double aDouble : array) stats.addValue(aDouble);
         return stats.getMax();
-
-
     }
 
     /**
@@ -46,18 +43,16 @@ public class StatisticUtilsArrayList {
      *
      * @throws IllegalArgumentException If an null or empty array list is provided.
      */
-    public double getMin(List<Double> givenList) {
+    public static double getMin(List<Double> givenList) {
+
         if (givenList == null || givenList.isEmpty())
 
             throw new IllegalArgumentException("Input arraylist min calculation cannot be null or empty");
-
 
         double[] array = givenList.stream().mapToDouble(i -> i).toArray();
         DescriptiveStatistics stats = new DescriptiveStatistics();
         for (Double aDouble : array) stats.addValue(aDouble);
         return stats.getMin();
-
-
     }
 
     /**
@@ -70,11 +65,11 @@ public class StatisticUtilsArrayList {
      * @throws IllegalArgumentException If an null or empty array list is provided.
      * @throws IllegalArgumentException If an array list that contains infinity as a value is provided.
      */
-    public double getMean(List<Double> givenList) {
+    public static double getMean(List<Double> givenList) {
+
         if (givenList == null || givenList.isEmpty())
 
             throw new IllegalArgumentException("Input arraylist mean calculation cannot be null or empty");
-
 
         if (givenList.contains(NEGATIVE_INFINITY) || givenList.contains(POSITIVE_INFINITY))
 
@@ -84,7 +79,6 @@ public class StatisticUtilsArrayList {
         DescriptiveStatistics stats = new DescriptiveStatistics();
         for (Double aDouble : array) stats.addValue(aDouble);
         return stats.getMean();
-
     }
 
     /**
@@ -96,18 +90,16 @@ public class StatisticUtilsArrayList {
      *
      * @throws IllegalArgumentException If an null or empty array list is provided.
      */
-    public double getMedian(List<Double> givenList) {
+    public static double getMedian(List<Double> givenList) {
+
         if (givenList == null || givenList.isEmpty())
 
             throw new IllegalArgumentException("Input arraylist median calculation cannot be null or empty");
-
 
         double[] array = givenList.stream().mapToDouble(i -> i).toArray();
         DescriptiveStatistics stats = new DescriptiveStatistics();
         for (Double aDouble : array) stats.addValue(aDouble);
         return stats.getPercentile(50);
-
-
     }
 
 
@@ -121,23 +113,19 @@ public class StatisticUtilsArrayList {
      * @throws IllegalArgumentException If an null or empty array list is provided.
      * @throws IllegalArgumentException If an array list that contains infinity as a value is provided.
      */
-    public double getStandardDeviation(List<Double> givenList) {
+    public static double getStandardDeviation(List<Double> givenList) {
+
         if (givenList == null || givenList.isEmpty())
 
             throw new IllegalArgumentException("Input arraylist standard_deviation calculation cannot be null or empty");
 
-
         if (givenList.contains(NEGATIVE_INFINITY) || givenList.contains(POSITIVE_INFINITY))
             throw new IllegalArgumentException("Input arraylist mean calculation cannot contain infinity");
-
 
         double[] array = givenList.stream().mapToDouble(i -> i).toArray();
         DescriptiveStatistics stats = new DescriptiveStatistics();
         for (Double aDouble : array) stats.addValue(aDouble);
         return stats.getStandardDeviation();
-
-
     }
-
 }
 
