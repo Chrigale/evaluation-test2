@@ -31,21 +31,13 @@ public class AscendingMinimaTest {
      * This is a testing method for the initial state of the givenArray variable of the AscendingMinima class.
      **/
     @Test
-    public void getGivenArrayInitialState() {
-
-        assertNull(calculator.getGivenArray());
-
-    }
+    public void getGivenArrayInitialState() { assertEquals(0,calculator.getGivenArray().length); }
 
     /**
      * This is a testing method for the initial state of the windowSize variable of the AscendingMinima class.
      **/
     @Test
-    public void getWindowSizeInitialState() {
-
-        assertEquals(0, calculator.getWindowSize());
-
-    }
+    public void getWindowSizeInitialState() { assertEquals(0, calculator.getWindowSize()); }
 
     /**
      * This method is used for testing the setter method for the givenArray variable of the AscendingMinima class.
@@ -60,7 +52,6 @@ public class AscendingMinimaTest {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> calculator.setArray(input));
 
         assertEquals("Input array cannot be null or empty or smaller than window size.", exception.getMessage());
-
     }
 
     /**
@@ -77,8 +68,6 @@ public class AscendingMinimaTest {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> calculator.setArray(new double[] {-5, -4, 10, 20, 50}));
 
         assertEquals("Input array cannot be null or empty or smaller than window size.", exception.getMessage());
-
-
     }
 
 
@@ -95,8 +84,6 @@ public class AscendingMinimaTest {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> calculator.setWindowSize(value));
 
         assertEquals("Window_size needs to be greater than zero.", exception.getMessage());
-
-
     }
 
     /**
@@ -112,29 +99,25 @@ public class AscendingMinimaTest {
         calculator.setWindowSize(value);
 
         assertEquals(value,calculator.getWindowSize());
+    }
 
-
+    static Stream<Arguments> setArrayInputProvider() {
+        return Stream.of(
+                Arguments.of(new double[] {-5, -4, 10, 20, 50}),
+                Arguments.of(new double[] {-5, -4, 10, 20, 50})
+        );
     }
 
     /**
      * This method is used for testing the setter method for the givenArray variable of the AscendingMinima class.
      **/
     @ParameterizedTest
-    @MethodSource
+    @MethodSource("setArrayInputProvider")
     public void setArrayInput(double[] value) {
 
         calculator.setArray(value);
 
         assertArrayEquals(value,calculator.getGivenArray());
-
-
-    }
-
-    static Stream<Arguments> setArrayInput() {
-        return Stream.of(
-                Arguments.of(new double[] {-5, -4, 10, 20, 50}),
-                Arguments.of(new double[] {-5, -4, 10, 20, 50})
-        );
     }
 
     /**
@@ -152,26 +135,19 @@ public class AscendingMinimaTest {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> calculator.setWindowSize(10));
 
         assertEquals("Window_size needs to be greater than array length.", exception.getMessage());
-
-
     }
 
     /**
      * This method is used for testing the void constructor of the AscendingMinima class.
      **/
     @Test
-    public void checkIfNullConstructorGivesNullObject() {
-
-        assertNotNull(calculator);
-
-
-    }
+    public void checkIfNullConstructorGivesNullObject() { assertNotNull(calculator); }
 
     /**
      * This method is used for testing the main constructor of the AscendingMinima class.
      **/
     @Test
-    public void Constructor() {
+    public void constructor() {
 
         getGivenArrayInitialState();
         getWindowSizeInitialState();
@@ -179,13 +155,11 @@ public class AscendingMinimaTest {
         double[] array      = {-5, -4, 10, 20, 50};
         int      windowSize = 3;
 
-        calculator = new AscendingMinima(array, windowSize);
+        calculator = new AscendingMinima(windowSize,array);
 
         assertNotNull(calculator);
         assertEquals(windowSize, calculator.getWindowSize());
         assertArrayEquals(array,calculator.getGivenArray());
-
-
     }
 
     /**
@@ -202,7 +176,6 @@ public class AscendingMinimaTest {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> calculator.getFirstWindow());
 
         assertEquals("You forgot to set windowSize or givenArray arguments.", exception.getMessage());
-
     }
 
     /**
@@ -219,27 +192,9 @@ public class AscendingMinimaTest {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> calculator.getFirstWindow());
 
         assertEquals("You forgot to set windowSize or givenArray arguments.", exception.getMessage());
-
     }
 
-    /**
-     * This method is a positive scenario test of the getFirstWindow method of the AscendingMinima class.
-     **/
-    @ParameterizedTest
-    @MethodSource
-    public void getFirstWindowTrueTest(double[] inputArray, int windowSize, List<Double> outputArray){
-
-        getGivenArrayInitialState();
-        getWindowSizeInitialState();
-
-        calculator.setWindowSize(windowSize);
-        calculator.setArray(inputArray);
-        assertEquals(outputArray,calculator.getFirstWindow());
-
-    }
-
-
-    static Stream<Arguments> getFirstWindowTrueTest() {
+    static Stream<Arguments> getFirstWindowTrueTestProvider() {
 
         return Stream.of(
                 Arguments.of( new double[] {-5, -4, 10, 20, 50}, 4 ,Arrays.asList(-5d, -4d, 10d, 20d)),
@@ -248,23 +203,21 @@ public class AscendingMinimaTest {
     }
 
     /**
-     * This method is a negative scenario test of the getFirstWindow method of the AscendingMinima class.
+     * This method is a positive scenario test of the getFirstWindow method of the AscendingMinima class.
      **/
     @ParameterizedTest
-    @MethodSource
-    public void getFirstWindowFalseTest(double[] inputArray, int windowSize, List<Double> outputArray){
+    @MethodSource("getFirstWindowTrueTestProvider")
+    public void getFirstWindowTrueTest(double[] inputArray, int windowSize, List<Double> outputArray){
 
         getGivenArrayInitialState();
         getWindowSizeInitialState();
 
         calculator.setWindowSize(windowSize);
         calculator.setArray(inputArray);
-        assertNotEquals(outputArray,calculator.getFirstWindow());
-
+        assertEquals(outputArray,calculator.getFirstWindow());
     }
 
-
-    static Stream<Arguments> getFirstWindowFalseTest() {
+    static Stream<Arguments> getFirstWindowFalseTestProvider() {
 
         return Stream.of(
                 Arguments.of( new double[] {-5, -4, 10, 20, 50}, 4 ,Arrays.asList(-5d, -4d, 10d)),
@@ -273,23 +226,21 @@ public class AscendingMinimaTest {
     }
 
     /**
-     * This method is a positive scenario test of the getFirstAscendingMinima method of the AscendingMinima class.
+     * This method is a negative scenario test of the getFirstWindow method of the AscendingMinima class.
      **/
     @ParameterizedTest
-    @MethodSource
-    public void getFirstAscendingMinimaTest(double[] inputArray, int windowSize, List<Double> outputArray){
+    @MethodSource("getFirstWindowFalseTestProvider")
+    public void getFirstWindowFalseTest(double[] inputArray, int windowSize, List<Double> outputArray){
 
         getGivenArrayInitialState();
         getWindowSizeInitialState();
 
         calculator.setWindowSize(windowSize);
         calculator.setArray(inputArray);
-        assertEquals(outputArray,calculator.getFirstAscendingMinima());
-
+        assertNotEquals(outputArray,calculator.getFirstWindow());
     }
 
-
-    static Stream<Arguments> getFirstAscendingMinimaTest() {
+    static Stream<Arguments> getFirstAscendingMinimaTestProvider() {
 
         return Stream.of(
                 Arguments.of( new double[] {9d,5d,10d,4d,3d}, 3 ,Arrays.asList(5d, 10d)),
@@ -298,23 +249,21 @@ public class AscendingMinimaTest {
     }
 
     /**
-     * This method is a negative scenario test of the getFirstAscendingMinima method of the AscendingMinima class.
+     * This method is a positive scenario test of the getFirstAscendingMinima method of the AscendingMinima class.
      **/
     @ParameterizedTest
-    @MethodSource
-    public void getFirstAscendingMinimaFalseTest(double[] inputArray, int windowSize, List<Double> outputArray){
+    @MethodSource("getFirstAscendingMinimaTestProvider")
+    public void getFirstAscendingMinimaTest(double[] inputArray, int windowSize, List<Double> outputArray){
 
         getGivenArrayInitialState();
         getWindowSizeInitialState();
 
         calculator.setWindowSize(windowSize);
         calculator.setArray(inputArray);
-        assertNotEquals(outputArray,calculator.getFirstAscendingMinima());
-
+        assertEquals(outputArray,calculator.getFirstAscendingMinima());
     }
 
-
-    static Stream<Arguments> getFirstAscendingMinimaFalseTest() {
+    static Stream<Arguments> getFirstAscendingMinimaFalseTestProvider() {
 
         return Stream.of(
                 Arguments.of( new double[] {9d,5d,10d,4d,3d}, 3 , singletonList(5d)),
@@ -323,23 +272,21 @@ public class AscendingMinimaTest {
     }
 
     /**
-     * This method is a positive scenario test of the getAscendingMinima method of the AscendingMinima class.
+     * This method is a negative scenario test of the getFirstAscendingMinima method of the AscendingMinima class.
      **/
     @ParameterizedTest
-    @MethodSource
-    public void getAscendingMinimaTest(double[] inputArray, int windowSize, double[] outputArray){
+    @MethodSource("getFirstAscendingMinimaFalseTestProvider")
+    public void getFirstAscendingMinimaFalseTest(double[] inputArray, int windowSize, List<Double> outputArray){
 
         getGivenArrayInitialState();
         getWindowSizeInitialState();
 
         calculator.setWindowSize(windowSize);
         calculator.setArray(inputArray);
-        assertArrayEquals(outputArray,calculator.getAscendingMinima());
-
+        assertNotEquals(outputArray,calculator.getFirstAscendingMinima());
     }
 
-
-    static Stream<Arguments> getAscendingMinimaTest() {
+    static Stream<Arguments> getAscendingMinimaTestProvider() {
 
         return Stream.of(
                 Arguments.of( new double[] {9d,5d,10d,4d,3d}, 3 ,new double[] {5d,4d,3d}),
@@ -348,4 +295,18 @@ public class AscendingMinimaTest {
         );
     }
 
+    /**
+     * This method is a positive scenario test of the getAscendingMinima method of the AscendingMinima class.
+     **/
+    @ParameterizedTest
+    @MethodSource("getAscendingMinimaTestProvider")
+    public void getAscendingMinimaTest(double[] inputArray, int windowSize, double[] outputArray){
+
+        getGivenArrayInitialState();
+        getWindowSizeInitialState();
+
+        calculator.setWindowSize(windowSize);
+        calculator.setArray(inputArray);
+        assertArrayEquals(outputArray,calculator.getAscendingMinima());
+    }
 }

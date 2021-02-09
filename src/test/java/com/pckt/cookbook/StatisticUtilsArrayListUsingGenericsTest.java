@@ -30,14 +30,7 @@ public class StatisticUtilsArrayListUsingGenericsTest<T extends Number> {
         DoubleCalculator  = new StatisticUtilsArrayListUsingGenerics<>();
     }
 
-    /**
-     * This method is used for testing the getMax() method of the StatisticUtilsArrayListUsingGenerics class for Integer objects.
-     **/
-    @ParameterizedTest
-    @MethodSource
-    public void testMaxIntegerInput(List<Integer> input, double expected) { assertEquals(expected, IntegerCalculator.getMax(input));}
-
-    static Stream<Arguments> testMaxIntegerInput() {
+    static Stream<Arguments> testMaxIntegerInputProvider() {
 
         return Stream.of(
                 Arguments.of( Arrays.asList(1, 2, 4), 4),
@@ -47,13 +40,15 @@ public class StatisticUtilsArrayListUsingGenericsTest<T extends Number> {
     }
 
     /**
-     * This method is used for testing the getMax() method of the StatisticUtilsArrayListUsingGenerics class for Double objects.
+     * This method is used for testing the getMax() method of the StatisticUtilsArrayListUsingGenerics class for Integer objects.
      **/
     @ParameterizedTest
-    @MethodSource
-    public void testMaxDoubleInput(List<Double> input, double expected) { assertEquals(expected, DoubleCalculator.getMax(input)); }
+    @MethodSource("testMaxIntegerInputProvider")
+    public void testMaxIntegerInput(List<Integer> input, double expected) { assertEquals(expected, IntegerCalculator.getMax(input));}
 
-    static Stream<Arguments> testMaxDoubleInput() {
+
+
+    static Stream<Arguments> testMaxDoubleInputProvider() {
 
         return Stream.of(
                 Arguments.of( Arrays.asList(1.38, 2.56, 4.3), 4.3),
@@ -63,13 +58,15 @@ public class StatisticUtilsArrayListUsingGenericsTest<T extends Number> {
     }
 
     /**
-     * This method is used for testing the getMin() method of the StatisticUtilsArrayListUsingGenerics class for Integer objects.
+     * This method is used for testing the getMax() method of the StatisticUtilsArrayListUsingGenerics class for Double objects.
      **/
     @ParameterizedTest
-    @MethodSource
-    public void testMinIntegerInput(List<Integer> input, double expected) { assertEquals(expected, IntegerCalculator.getMin(input));}
+    @MethodSource("testMaxDoubleInputProvider")
+    public void testMaxDoubleInput(List<Double> input, double expected) { assertEquals(expected, DoubleCalculator.getMax(input)); }
 
-    static Stream<Arguments> testMinIntegerInput() {
+
+
+    static Stream<Arguments> testMinIntegerInputProvider() {
 
         return Stream.of(
                 Arguments.of( Arrays.asList(1, 2, 4), 1),
@@ -79,13 +76,15 @@ public class StatisticUtilsArrayListUsingGenericsTest<T extends Number> {
     }
 
     /**
-     * This method is used for testing the getMin() method of the StatisticUtilsArrayListUsingGenerics class for Double objects.
+     * This method is used for testing the getMin() method of the StatisticUtilsArrayListUsingGenerics class for Integer objects.
      **/
     @ParameterizedTest
-    @MethodSource
-    public void testMinDoubleInput(List<Double> input, double expected) { assertEquals(expected, DoubleCalculator.getMin(input)); }
+    @MethodSource("testMinIntegerInputProvider")
+    public void testMinIntegerInput(List<Integer> input, double expected) { assertEquals(expected, IntegerCalculator.getMin(input));}
 
-    static Stream<Arguments> testMinDoubleInput() {
+
+
+    static Stream<Arguments> testMinDoubleInputProvider() {
 
         return Stream.of(
                 Arguments.of( Arrays.asList(1.38, 2.56, 4.3), 1.38),
@@ -95,13 +94,15 @@ public class StatisticUtilsArrayListUsingGenericsTest<T extends Number> {
     }
 
     /**
-     * This method is used for testing the getMean() method of the StatisticUtilsArrayListUsingGenerics class for Integer objects.
+     * This method is used for testing the getMin() method of the StatisticUtilsArrayListUsingGenerics class for Double objects.
      **/
     @ParameterizedTest
-    @MethodSource
-    public void testMeanIntegerInput(List<Integer> input, double expected) { assertEquals(expected, IntegerCalculator.getMean(input));}
+    @MethodSource("testMinDoubleInputProvider")
+    public void testMinDoubleInput(List<Double> input, double expected) { assertEquals(expected, DoubleCalculator.getMin(input)); }
 
-    static Stream<Arguments> testMeanIntegerInput() {
+
+
+    static Stream<Arguments> testMeanIntegerInputProvider() {
 
         return Stream.of(
                 Arguments.of( Arrays.asList(9, 10, 12, 13, 13), 11.4),
@@ -110,13 +111,15 @@ public class StatisticUtilsArrayListUsingGenericsTest<T extends Number> {
     }
 
     /**
-     * This method is used for testing the getMean() method of the StatisticUtilsArrayListUsingGenerics class for Double objects.
+     * This method is used for testing the getMean() method of the StatisticUtilsArrayListUsingGenerics class for Integer objects.
      **/
     @ParameterizedTest
-    @MethodSource
-    public void testMeanDoubleInput(List<Double> input, double expected) { assertEquals(expected, DoubleCalculator.getMean(input)); }
+    @MethodSource("testMeanIntegerInputProvider")
+    public void testMeanIntegerInput(List<Integer> input, double expected) { assertEquals(expected, IntegerCalculator.getMean(input));}
 
-    static Stream<Arguments> testMeanDoubleInput() {
+
+
+    static Stream<Arguments> testMeanDoubleInputProvider() {
 
         return Stream.of(
                 Arguments.of( Arrays.asList(9d, 10d, 12d, 13d, 13d), 11.4),
@@ -125,13 +128,15 @@ public class StatisticUtilsArrayListUsingGenericsTest<T extends Number> {
     }
 
     /**
-     * This method is used for testing the getMedian() method of the StatisticUtilsArrayListUsingGenerics class for Integer objects.
+     * This method is used for testing the getMean() method of the StatisticUtilsArrayListUsingGenerics class for Double objects.
      **/
     @ParameterizedTest
-    @MethodSource
-    public void testMedianIntegerInput(List<Integer> input, double expected) { assertEquals(expected, IntegerCalculator.getMedian(input));}
+    @MethodSource("testMeanDoubleInputProvider")
+    public void testMeanDoubleInput(List<Double> input, double expected) { assertEquals(expected, DoubleCalculator.getMean(input)); }
 
-    static Stream<Arguments> testMedianIntegerInput() {
+
+
+    static Stream<Arguments> testMedianIntegerInputProvider() {
 
         return Stream.of(
                 Arguments.of( Arrays.asList(9, 10, 12, 13, 13), 12),
@@ -140,13 +145,15 @@ public class StatisticUtilsArrayListUsingGenericsTest<T extends Number> {
     }
 
     /**
-     * This method is used for testing the getMedian() method of the StatisticUtilsArrayListUsingGenerics class for Double objects.
+     * This method is used for testing the getMedian() method of the StatisticUtilsArrayListUsingGenerics class for Integer objects.
      **/
     @ParameterizedTest
-    @MethodSource
-    public void testMedianDoubleInput(List<Double> input, double expected) { assertEquals(expected, DoubleCalculator.getMedian(input)); }
+    @MethodSource("testMedianIntegerInputProvider")
+    public void testMedianIntegerInput(List<Integer> input, double expected) { assertEquals(expected, IntegerCalculator.getMedian(input));}
 
-    static Stream<Arguments> testMedianDoubleInput() {
+
+
+    static Stream<Arguments> testMedianDoubleInputProvider() {
 
         return Stream.of(
                 Arguments.of( Arrays.asList(9d, 10d, 12d, 13d, 13d), 12d),
@@ -155,13 +162,15 @@ public class StatisticUtilsArrayListUsingGenericsTest<T extends Number> {
     }
 
     /**
-     * This method is used for testing the getStandardDeviation() method of the StatisticUtilsArrayListUsingGenerics class for Integer objects.
+     * This method is used for testing the getMedian() method of the StatisticUtilsArrayListUsingGenerics class for Double objects.
      **/
     @ParameterizedTest
-    @MethodSource
-    public void testStandardDeviationIntegerInput(List<Integer> input, double expected) { assertEquals(expected, IntegerCalculator.getStandardDeviation(input));}
+    @MethodSource("testMedianDoubleInputProvider")
+    public void testMedianDoubleInput(List<Double> input, double expected) { assertEquals(expected, DoubleCalculator.getMedian(input)); }
 
-    static Stream<Arguments> testStandardDeviationIntegerInput() {
+
+
+    static Stream<Arguments> testStandardDeviationIntegerInputProvider() {
 
         return Stream.of(
                 Arguments.of( Arrays.asList(10, 12, 23, 23), 6.97614984548545),
@@ -170,13 +179,14 @@ public class StatisticUtilsArrayListUsingGenericsTest<T extends Number> {
     }
 
     /**
-     * This method is used for testing the getStandardDeviation() method of the StatisticUtilsArrayListUsingGenerics class for Double objects.
+     * This method is used for testing the getStandardDeviation() method of the StatisticUtilsArrayListUsingGenerics class for Integer objects.
      **/
     @ParameterizedTest
-    @MethodSource
-    public void testStandardDeviationDoubleInput(List<Double> input, double expected) { assertEquals(expected, DoubleCalculator.getStandardDeviation(input)); }
+    @MethodSource("testStandardDeviationIntegerInputProvider")
+    public void testStandardDeviationIntegerInput(List<Integer> input, double expected) { assertEquals(expected, IntegerCalculator.getStandardDeviation(input));}
 
-    static Stream<Arguments> testStandardDeviationDoubleInput() {
+
+    static Stream<Arguments> testStandardDeviationDoubleInputProvider() {
 
         return Stream.of(
                 Arguments.of( Arrays.asList(10d, 12d, 23d, 23d), 6.97614984548545),
@@ -185,14 +195,23 @@ public class StatisticUtilsArrayListUsingGenericsTest<T extends Number> {
     }
 
     /**
+     * This method is used for testing the getStandardDeviation() method of the StatisticUtilsArrayListUsingGenerics class for Double objects.
+     **/
+    @ParameterizedTest
+    @MethodSource("testStandardDeviationDoubleInputProvider")
+    public void testStandardDeviationDoubleInput(List<Double> input, double expected) { assertEquals(expected, DoubleCalculator.getStandardDeviation(input)); }
+
+
+
+    /**
      * This method is used for testing the getMax() , getMin() , getMean() , getMedian() , getStandardDeviation() methods of
      * StatisticUtilsArrayListUsingGenerics<Integer> class for null and empty inputs.
      */
     @ParameterizedTest
     @NullAndEmptySource
     void testForNullAndEmptyIntegerArrays(List<Integer> input) {
-        assertAll(
 
+        assertAll(
                 () -> assertThrows(IllegalArgumentException.class, () -> IntegerCalculator.getMax(input),
                         "didn't throw an exception in getMax method in StatisticUtilsArrayList class!"),
 
@@ -211,9 +230,7 @@ public class StatisticUtilsArrayListUsingGenericsTest<T extends Number> {
 
                 () -> assertThrows(IllegalArgumentException.class, () -> IntegerCalculator.getStandardDeviation(input),
                         "didn't throw an exception in getStandardDeviation method in StatisticUtilsArrayList class!")
-
         );
-
     }
 
     /**
@@ -223,6 +240,7 @@ public class StatisticUtilsArrayListUsingGenericsTest<T extends Number> {
     @ParameterizedTest
     @NullAndEmptySource
     void testForNullAndEmptyDoubleArrays(List<Double> input) {
+
         assertAll(
 
                 () -> assertThrows(IllegalArgumentException.class, () -> DoubleCalculator.getMax(input),
@@ -243,9 +261,14 @@ public class StatisticUtilsArrayListUsingGenericsTest<T extends Number> {
 
                 () -> assertThrows(IllegalArgumentException.class, () -> DoubleCalculator.getStandardDeviation(input),
                         "didn't throw an exception in getStandardDeviation method in StatisticUtilsArrayList class!")
-
         );
+    }
 
+    static Stream<Arguments> testInfinityExceptionsProvider() {
+        return Stream.of(
+                Arguments.of( Arrays.asList(1.38,POSITIVE_INFINITY, 4.3)),
+                Arguments.of( Arrays.asList(1.38, NEGATIVE_INFINITY, 4.3))
+        );
     }
 
     /**
@@ -253,8 +276,9 @@ public class StatisticUtilsArrayListUsingGenericsTest<T extends Number> {
      * for inputs that contains infinity as a value.
      */
     @ParameterizedTest
-    @MethodSource
+    @MethodSource("testInfinityExceptionsProvider")
     public void testInfinityExceptions(List<Double> input) {
+
         assertAll(
                 () -> assertThrows(IllegalArgumentException.class, () -> DoubleCalculator.getMean(input),
                         "didn't throw an infinity exception in getMean method in StatisticUtilsArrayList class!"),
@@ -263,24 +287,25 @@ public class StatisticUtilsArrayListUsingGenericsTest<T extends Number> {
                 () -> assertThrows(IllegalArgumentException.class, () -> DoubleCalculator.getStandardDeviation(input),
                         "didn't throw an infinity exception in getStandardDeviation method in StatisticUtilsArrayList class!")
         );
-
     }
 
-    static Stream<Arguments> testInfinityExceptions() {
+
+
+    static Stream<Arguments> testInfinityExceptionsForIntegerArrayProvider() {
         return Stream.of(
-                Arguments.of( Arrays.asList(1.38,POSITIVE_INFINITY, 4.3)),
-                Arguments.of( Arrays.asList(1.38, NEGATIVE_INFINITY, 4.3))
+                Arguments.of( Arrays.asList(1,POSITIVE_INFINITY, 4)),
+                Arguments.of( Arrays.asList(1, NEGATIVE_INFINITY, 4))
         );
     }
-
 
     /**
      * This method is used for testing the getMean() and getStandardDeviation() methods of StatisticUtilsArrayListUsingGenerics<Integer> class
      * for inputs that contains infinity as a value.
      */
     @ParameterizedTest
-    @MethodSource
+    @MethodSource("testInfinityExceptionsForIntegerArrayProvider")
     public void testInfinityExceptionsForIntegerArray(List<Integer> input) {
+
         assertAll(
                 () -> assertThrows(IllegalArgumentException.class, () -> IntegerCalculator.getMean(input),
                         "didn't throw an infinity exception in getMean method in StatisticUtilsArrayList class!"),
@@ -289,15 +314,5 @@ public class StatisticUtilsArrayListUsingGenericsTest<T extends Number> {
                 () -> assertThrows(IllegalArgumentException.class, () -> IntegerCalculator.getStandardDeviation(input),
                         "didn't throw an infinity exception in getStandardDeviation method in StatisticUtilsArrayList class!")
         );
-
     }
-
-    static Stream<Arguments> testInfinityExceptionsForIntegerArray() {
-        return Stream.of(
-                Arguments.of( Arrays.asList(1,POSITIVE_INFINITY, 4)),
-                Arguments.of( Arrays.asList(1, NEGATIVE_INFINITY, 4))
-        );
-    }
-
-
 }
