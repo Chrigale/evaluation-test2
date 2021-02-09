@@ -166,6 +166,7 @@ public class AscendingMinima {
 
             window.remove(0);
         }
+
         return ascendingMinima;
     }
 
